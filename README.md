@@ -27,7 +27,11 @@ First, download images to `data/celebA`:
 
 Second, train the GAN:
 
-    $ python main.py
+    $ python main.py --point "25 58"
+
+Third, generate faces with the trained generator:
+
+    $ python generate.py --num_imgs 1000
 
 ## Result on celebA
 
