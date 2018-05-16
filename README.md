@@ -34,6 +34,6 @@ Second, train the GAN:
 
 <a href="http://tensorlayer.readthedocs.io">
 <div align="center">
-	<img src="img/result.png" width="90%" height="90%"/>
+	<img src="img/training.gif"/>
 </div>
 </a>
