@@ -4,7 +4,7 @@
 *~
 .DS_Store
 .idea
-.spyproject/
+.vscode/
 build/
 dist
 docs/_build
@@ -12,3 +12,4 @@ tensorlayer.egg-info
 tensorlayer/__pacache__
 samples/
 data/
+result/

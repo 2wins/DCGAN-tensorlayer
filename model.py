@@ -11,7 +11,6 @@ def generator_simplified_api(inputs, is_train=True, reuse=False):
     s2, s4, s8, s16 = int(image_size/2), int(image_size/4), int(image_size/8), int(image_size/16)
     gf_dim = 64 # Dimension of gen filters in first conv layer. [64]
     c_dim = FLAGS.c_dim # n_color 3
-    batch_size = FLAGS.batch_size # 64
     w_init = tf.random_normal_initializer(stddev=0.02)
     gamma_init = tf.random_normal_initializer(1., 0.02)
     with tf.variable_scope("generator", reuse=reuse):
@@ -25,22 +24,22 @@ def generator_simplified_api(inputs, is_train=True, reuse=False):
                 gamma_init=gamma_init, name='g/h0/batch_norm')
 
         net_h1 = DeConv2d(net_h0, gf_dim*4, (5, 5), out_size=(s8, s8), strides=(2, 2),
-                padding='SAME', batch_size=batch_size, act=None, W_init=w_init, name='g/h1/decon2d')
+                padding='SAME', act=None, W_init=w_init, name='g/h1/decon2d')
         net_h1 = BatchNormLayer(net_h1, act=tf.nn.relu, is_train=is_train,
                 gamma_init=gamma_init, name='g/h1/batch_norm')
 
         net_h2 = DeConv2d(net_h1, gf_dim*2, (5, 5), out_size=(s4, s4), strides=(2, 2),
-                padding='SAME', batch_size=batch_size, act=None, W_init=w_init, name='g/h2/decon2d')
+                padding='SAME', act=None, W_init=w_init, name='g/h2/decon2d')
         net_h2 = BatchNormLayer(net_h2, act=tf.nn.relu, is_train=is_train,
                 gamma_init=gamma_init, name='g/h2/batch_norm')
 
         net_h3 = DeConv2d(net_h2, gf_dim, (5, 5), out_size=(s2, s2), strides=(2, 2),
-                padding='SAME', batch_size=batch_size, act=None, W_init=w_init, name='g/h3/decon2d')
+                padding='SAME', act=None, W_init=w_init, name='g/h3/decon2d')
         net_h3 = BatchNormLayer(net_h3, act=tf.nn.relu, is_train=is_train,
                 gamma_init=gamma_init, name='g/h3/batch_norm')
 
         net_h4 = DeConv2d(net_h3, c_dim, (5, 5), out_size=(image_size, image_size), strides=(2, 2),
-                padding='SAME', batch_size=batch_size, act=None, W_init=w_init, name='g/h4/decon2d')
+                padding='SAME', act=None, W_init=w_init, name='g/h4/decon2d')
         logits = net_h4.outputs
         net_h4.outputs = tf.nn.tanh(net_h4.outputs)
     return net_h4, logits
